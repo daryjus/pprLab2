@@ -30,23 +30,48 @@ testowy_1(char *host, int liczba1, int liczba2)
 	if (result_1 == (wyjscie *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-
+    
+	
 	printf("\nWprowadzone dane:\t%d\t%d\n", liczba1, liczba2);
 	printf("\nUzyskane wyniki:\n");
 	printf("\tsuma:\t\t%d\n\troznica:\t%d\n\tiloczyn:\t%d\n\n",
 		result_1->suma, result_1->roznica, result_1->iloczyn);
+   
+    int conv(int n)
+    {
+        int hex = 0;
+        int base = 1;
+        for(; n ; n /= 10, base *= 16)
+        {
+            hex += (n % 10) * base;
+        }
+    return hex;
+    }
+
+    int liczba1H = liczba1;
+    int liczba2H = liczba2;
+    conv(liczba1H);
+        conv(liczba2H);
+    printf ("Pierwsza liczba w hex: %#x", liczba1H);
+    printf ("\nDruga liczba w hex: %#x\n", liczba2H);
+    
+
 
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
+    
+
+    
+    
+    
 }
 
 
 int
 main (int argc, char *argv[])
 {
-    int liczba1 = 4;
-    int liczba = 2;
+    
 	char *host;
     printf ("main ");
 	if (argc < 2) {
@@ -55,5 +80,6 @@ main (int argc, char *argv[])
 	}
 	host = argv[1];
 	testowy_1 (host, atoi(argv[2]), atoi(argv[3]));
+    
 exit (0);
 }
